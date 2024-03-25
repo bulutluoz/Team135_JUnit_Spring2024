@@ -9,10 +9,11 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
+import utilities.TestBase_BeforeAfterClass;
 
 import java.time.Duration;
 
-public class C04_RadioButtons {
+public class C04_RadioButtons extends TestBase_BeforeAfterClass {
 
     //Gerekli yapiyi olusturun ve aşağıdaki görevi tamamlayın.
     //	a. Verilen web sayfasına gidin.
@@ -21,19 +22,6 @@ public class C04_RadioButtons {
     //	c. Iki farkli test method’u oluşturup yazidan veya direk buton’dan size uygun olani secin
     //	d. Sectiginiz radio button’un seçili, ötekilerin seçili olmadigini test edin
 
-    static WebDriver driver;
-    @BeforeClass
-    public static void setup(){
-        WebDriverManager.chromedriver().setup();
-        driver = new ChromeDriver();
-        driver.manage().window().maximize();
-        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
-    }
-
-    @AfterClass
-    public static void teardown(){
-        driver.quit();
-    }
 
     @Test
     public void yazidanSecimTesti(){
