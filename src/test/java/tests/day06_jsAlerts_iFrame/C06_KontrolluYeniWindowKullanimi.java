@@ -11,6 +11,19 @@ public class C06_KontrolluYeniWindowKullanimi extends TestBase_BeforeAfter {
     @Test
     public void test01(){
 
+        /*
+            Eger yaptigimiz test sirasinda
+            kontrollu olarak yeni tab/window olusturursak
+            driver objesi OTOMATIK olarak yeni window'a gecis yapar
+
+            Eger testimiz sirasinda
+            gectigimiz window'lara tekrar donmemiz gerekiyorsa
+            o window'dan gecerken WindowHandleDegerini kaydedip
+            ihtiyac oldugunda
+            driver.switchTo().window(toWindowHandleDegeri);
+            ile eski window'a donebiliriz.
+         */
+
         //● testotomasyonu anasayfa adresine gidin.
         driver.get("https://www.testotomasyonu.com");
         //● Sayfa’nin window handle degerini String bir degiskene atayin
