@@ -7,6 +7,8 @@ import org.openqa.selenium.WebElement;
 import utilities.ReusableMethods;
 import utilities.TestBase_BeforeAfter;
 
+import java.util.Set;
+
 public class C07_KontrolDisiYeniWindowKullanimi extends TestBase_BeforeAfter {
 
     @Test
@@ -31,7 +33,7 @@ public class C07_KontrolDisiYeniWindowKullanimi extends TestBase_BeforeAfter {
 
         Assert.assertEquals(expectedUrunIsmi,actualUrunIsmi);
         ReusableMethods.bekle(2);
-        System.out.println("Click yapmadan once WHD : " + driver.getWindowHandle());
+        String ilkWindowWHD = driver.getWindowHandle();
         //4- Dell bilgisayar’a tiklayip acilan sayfada urun fiyatinin $399.00 olduğunu test edin.
 
         dellBilgElementi.click();
@@ -41,13 +43,43 @@ public class C07_KontrolDisiYeniWindowKullanimi extends TestBase_BeforeAfter {
             driver eski window'da kalir
 
             driver'in yeni window'a gecis yapabilmesi icin
-            driver
+            driver'a yeni window'un WindowHandleDegerini vermeliyiz
          */
-        System.out.println("Click yaptiktan sonra WHD : " + driver.getWindowHandle());
+
+        Set<String> tumWHDSeti = driver.getWindowHandles();
+        String ikinciWindowWHD="";
+
+        for (String eachWHD : tumWHDSeti
+             ) {
+
+            if ( ! eachWHD.equals(ilkWindowWHD)){
+                ikinciWindowWHD = eachWHD;
+            }
+        }
+
+
+        driver.switchTo().window(ikinciWindowWHD);
+
         WebElement fiyatElementi = driver.findElement(By.id("priceproduct"));
 
-        System.out.println(fiyatElementi.getText());
+        String expectedFiyat = "$399.00";
+        String actualFiyat = fiyatElementi.getText();
+
+        Assert.assertEquals(expectedFiyat,actualFiyat);
+
         //5- Ilk sayfaya donun ve Fashion yazisinin gorunur olduğunu test edin
+
+        driver.switchTo().window(ilkWindowWHD);
+
+        // fashion bir iframe icinde oldugundan once o iframe'e gecis yapmaliyiz
+
+        WebElement iframeFashion= driver.findElement(By.xpath("(//iframe)[2]"));
+        driver.switchTo().frame(iframeFashion);
+
+        WebElement fashionYaziElementi = driver.findElement(By.xpath("//h2"));
+
+        Assert.assertTrue(fashionYaziElementi.isDisplayed());
+
         //6- Sayfayi kapatin
 
         ReusableMethods.bekle(2);
