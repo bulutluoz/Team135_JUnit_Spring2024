@@ -1,5 +1,6 @@
-package tests.day07_actionClass_fakerClass;
+package tests.day08_actions_faker_fileTestleri;
 
+import com.github.javafaker.Faker;
 import org.junit.Assert;
 import org.junit.Test;
 import org.openqa.selenium.By;
@@ -9,7 +10,7 @@ import org.openqa.selenium.interactions.Actions;
 import utilities.ReusableMethods;
 import utilities.TestBase_BeforeAfter;
 
-public class C08_KlavyeActions extends TestBase_BeforeAfter {
+public class C01_FakerKullanimi extends TestBase_BeforeAfter {
 
     @Test
     public void test01(){
@@ -26,17 +27,22 @@ public class C08_KlavyeActions extends TestBase_BeforeAfter {
         WebElement isimKutusu = driver.findElement(By.id("firstName"));
 
         Actions actions = new Actions(driver);
+        Faker faker = new Faker();
+
+        String password = faker.internet().password();
+        String email = faker.internet().emailAddress();
+
         ReusableMethods.bekle(1);
         actions.click(isimKutusu)
-                .sendKeys("Muhammed")
+                .sendKeys(faker.name().firstName())
                 .sendKeys(Keys.TAB)
-                .sendKeys("Yilmaz")
+                .sendKeys(faker.name().lastName())
                 .sendKeys(Keys.TAB)
-                .sendKeys("muhammed@testotomasyonu.com")
+                .sendKeys(email)
                 .sendKeys(Keys.TAB)
-                .sendKeys("1453")
+                .sendKeys(password)
                 .sendKeys(Keys.TAB)
-                .sendKeys("1453")
+                .sendKeys(password)
                 .perform();
         ReusableMethods.bekle(15);
         driver.findElement(By.id("btn-submit-form"))
@@ -45,16 +51,20 @@ public class C08_KlavyeActions extends TestBase_BeforeAfter {
         //5- Kaydin olusturuldugunu test edin
 
         WebElement emailKutusu = driver.findElement(By.id("email"));
-        emailKutusu.sendKeys("muhammed@testotomasyonu.com");
+        emailKutusu.sendKeys(email);
 
         WebElement passwordKutusu = driver.findElement(By.id("password"));
-        passwordKutusu.sendKeys("1453");
+        passwordKutusu.sendKeys(password);
 
         driver.findElement(By.id("submitlogin")).click();
 
         WebElement logoutButonu = driver.findElement(By.xpath("(//*[text()='Logout'])[2]"));
 
         Assert.assertTrue(logoutButonu.isDisplayed());
+        ReusableMethods.bekle(1);
+
+        logoutButonu.click();
+
 
         ReusableMethods.bekle(5);
     }
