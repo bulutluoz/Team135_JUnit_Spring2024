@@ -49,17 +49,15 @@ public class C02_Actions extends TestBase_BeforeAfter {
 
         driver.switchTo().frame(iframeElementi);
 
-        ReusableMethods.bekle(1);
-
 
         //3- videoyu izlemek icin Play tusuna basin
         WebElement playTusu = driver.findElement(By.xpath("//button[@title='Play']"));
         playTusu.click();
-        ReusableMethods.bekle(2);
+
         //4- videoyu calistirdiginizi test edin
         WebElement videoElementi = driver.findElement(By.xpath("//*[@*='video-stream html5-main-video']"));
         actions.moveToElement(videoElementi).perform();
-        ReusableMethods.bekle(2);
+
         WebElement sesElementi = driver.findElement(By.xpath("//*[@*='ytp-volume-panel']"));
         Assert.assertTrue(sesElementi.isEnabled());
 
