@@ -69,9 +69,26 @@ public class C02_KlasikWebTables extends TestBase_BeforeAfter {
 
         //9. Satir ve sutunu parametre olarak alip, hucredeki bilgiyi döndüren bir method olusturun
 
+        System.out.println(getData(2, 3)); // $40.00
+        System.out.println(getData(1,2)); // Electronics
+        System.out.println(getData(4,4)); // Go
 
         //10. 4.satirdaki category degerinin "Furniture" oldugunu test edin
 
+        String expectedData = "Furniture";
+        String actualData = getData(4,2);
+
+        Assert.assertEquals(expectedData,actualData);
+
         ReusableMethods.bekle(2);
+    }
+
+    public String getData(int satir, int sutun){
+        //        //tbody/tr[  5   ]/td[   1   ]
+
+        String dinamikXpath = "//tbody/tr[" + satir + "]/td[" + sutun + "]";
+        WebElement istenenDataElementi = driver.findElement(By.xpath(dinamikXpath));
+
+        return istenenDataElementi.getText();
     }
 }
