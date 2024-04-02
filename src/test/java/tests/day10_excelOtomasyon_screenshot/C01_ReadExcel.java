@@ -37,6 +37,9 @@ public class C01_ReadExcel {
 
         System.out.println(satir2ucuncuData); // Afganistan
 
+        // 4.satirdaki 2.datayi yazdiralim
+
+        System.out.println(sayfa1.getRow(3).getCell(1)); // Aljiers
 
 
     }
