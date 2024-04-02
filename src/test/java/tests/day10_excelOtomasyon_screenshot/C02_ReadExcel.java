@@ -9,6 +9,9 @@ import org.junit.Test;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.Map;
+import java.util.Set;
+import java.util.TreeMap;
 
 public class C02_ReadExcel {
 
@@ -91,15 +94,40 @@ public class C02_ReadExcel {
 
         Assert.assertTrue(amsterdamVarMi);
 
-        //		- Ingilizce Ulke isimleri ve baskentleri bir map olarak kaydedelim
-        // ulke ismi key, baskent value olsun
+        //		- Ingilizce Ulke isimleri ve Turkce baskentleri bir map olarak kaydedelim
+        //      ulke ismi key, baskent value olsun
+        Map<String,String> ulkeBaskentMap = new TreeMap<>();
+
+        for (int i = 0; i <= sayfa1.getLastRowNum() ; i++) {
+
+            String satirdakiUlkeAdi = sayfa1.getRow(i).getCell(0).toString();
+            String satirdakiBaskentAdi = sayfa1.getRow(i).getCell(3).toString();
+
+            ulkeBaskentMap.put(satirdakiUlkeAdi,satirdakiBaskentAdi);
+        }
 
 
         // Senegal'in turkce baskent isminin Dakar oldugunu test edin
 
+        expectedBaskentIsmi = "Dakar";
+        actualBaskentIsmi = ulkeBaskentMap.get("Senegal");
+        Assert.assertEquals(expectedBaskentIsmi,actualBaskentIsmi);
 
         // ulkeler excelinde turkce baskent ismi Amsterdam olan bir ulke oldugunu test edin
 
+        Assert.assertTrue(ulkeBaskentMap.containsValue("Amsterdam"));
+
+        // Baskent ismi A ile baslayan ulke isimlerini yazdirin
+
+        Set<String> ulkeIsimleriseti = ulkeBaskentMap.keySet();
+
+        for (String eachUlke : ulkeIsimleriseti
+             ) {
+
+            if (ulkeBaskentMap.get(eachUlke).startsWith("A")){
+                System.out.println(eachUlke + " - " + ulkeBaskentMap.get(eachUlke)) ;
+            }
+        }
 
     }
 }
