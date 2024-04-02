@@ -3,7 +3,10 @@ package tests.day10_excelOtomasyon_screenshot;
 import org.apache.commons.io.FileUtils;
 import org.junit.Assert;
 import org.junit.Test;
-import org.openqa.selenium.*;
+import org.openqa.selenium.By;
+import org.openqa.selenium.Keys;
+import org.openqa.selenium.OutputType;
+import org.openqa.selenium.WebElement;
 import utilities.ReusableMethods;
 import utilities.TestBase_BeforeAfter;
 
@@ -11,7 +14,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.List;
 
-public class C04_GetScreenshot extends TestBase_BeforeAfter {
+public class C07_TekWebelementScreenshot extends TestBase_BeforeAfter {
 
     @Test
     public void test01() throws IOException {
@@ -29,24 +32,22 @@ public class C04_GetScreenshot extends TestBase_BeforeAfter {
 
         Assert.assertTrue(bulunanUrunElementleriList.size() > 0);
 
+        // arama sonuc yazisinin screenshot'ini alip kaydedin
 
-        // arama sonuc sayfasinin screenshot'ini kaydedin
+        // 1- screenshot alinacak webelemnti locate edip kaydedelim
+        WebElement aramaSonucElementi = driver.findElement(By.xpath("//*[@*='product-count-text']"));
 
-        // 1- takesScreenshot objesi olusturalim
-        TakesScreenshot tss = (TakesScreenshot) driver;
+        // 2- screenshot'in kaydedilecegi dosyayi olusturalim
 
-        // 2- cekilen screenshot'i kaydedecegimiz dosyayi olusturalim
+        File webelementSS = new File("target/screenshots/webelementSS.png");
 
-        File tumSayfaScreenshot = new File("target/screenshots/tumSayfaSS.jpeg");
+        // 3- screenshot alip gecici dosyaya kaydedelim
 
-        // 3- tss objesini kullanarak screenshot alip, gecici bir dosyaya kaydedelim
+        File geciciDosya = aramaSonucElementi.getScreenshotAs(OutputType.FILE);
 
-        File geciciDosya = tss.getScreenshotAs(OutputType.FILE);
+        // 4- gecici dosyayi ana dosyaya kopyalayalim
 
-        // 4- gecici dosyayi, asil kaydetmek istedigimiz dosyaya kopyalayalim
+        FileUtils.copyFile(geciciDosya,webelementSS);
 
-        FileUtils.copyFile(geciciDosya,tumSayfaScreenshot);
-
-        ReusableMethods.bekle(2);
     }
 }
