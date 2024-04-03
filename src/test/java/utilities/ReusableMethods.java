@@ -1,10 +1,7 @@
 package utilities;
 
 import org.apache.commons.io.FileUtils;
-import org.openqa.selenium.OutputType;
-import org.openqa.selenium.TakesScreenshot;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
+import org.openqa.selenium.*;
 
 import java.io.File;
 import java.io.IOException;
@@ -98,4 +95,96 @@ public class ReusableMethods {
         }
 
     }
+
+    public static void tumSayfaScreenshot(WebDriver driver,String raporIsmi){
+
+        // 1- takesScreenshot objesi olusturalim
+        TakesScreenshot tss = (TakesScreenshot) driver;
+
+        // 2- cekilen screenshot'i kaydedecegimiz dosyayi olusturalim
+
+
+        String kaydedilecekDosyaYolu = "target/screenshots/tumSayfaSS.jpeg";
+
+        // screenshot'in her calistiginda farkli isimde olmasi icin tarih damgasi ekleyelim
+
+        LocalDateTime ldt = LocalDateTime.now();
+        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("YYMMddHHmmss");
+        String tarihDamgasi = ldt.format(dtf); // 240402123223
+
+        kaydedilecekDosyaYolu = "target/screenshots/"+raporIsmi+tarihDamgasi+".jpeg";
+
+        File tumSayfaScreenshot = new File(kaydedilecekDosyaYolu);
+
+        // 3- tss objesini kullanarak screenshot alip, gecici bir dosyaya kaydedelim
+
+        File geciciDosya = tss.getScreenshotAs(OutputType.FILE);
+
+        // 4- gecici dosyayi, asil kaydetmek istedigimiz dosyaya kopyalayalim
+
+        try {
+            FileUtils.copyFile(geciciDosya,tumSayfaScreenshot);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
+    }
+
+    public static void webelementScreenshot(WebElement istenenElement){
+
+        LocalDateTime ldt = LocalDateTime.now();
+        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("YYMMddHHmmss");
+        String tarihDamgasi = ldt.format(dtf); // 240402123223
+
+        String kaydedilecekDosyaYolu = "target/screenshots/webelementSS"+tarihDamgasi+".jpeg";
+
+        // 1- screenshot alinacak webelemnti locate edip kaydedelim
+
+        // 2- screenshot'in kaydedilecegi dosyayi olusturalim
+
+        File webelementSS = new File(kaydedilecekDosyaYolu);
+
+        // 3- screenshot alip gecici dosyaya kaydedelim
+
+        File geciciDosya = istenenElement.getScreenshotAs(OutputType.FILE);
+
+        // 4- gecici dosyayi ana dosyaya kopyalayalim
+
+        try {
+            FileUtils.copyFile(geciciDosya,webelementSS);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public static void webelementScreenshot(WebElement istenenElement,String raporIsmi){
+        LocalDateTime ldt = LocalDateTime.now();
+        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("YYMMddHHmmss");
+        String tarihDamgasi = ldt.format(dtf); // 240402123223
+
+        String kaydedilecekDosyaYolu = "target/screenshots/"+raporIsmi+tarihDamgasi+".jpeg";
+
+        // 1- screenshot alinacak webelemnti locate edip kaydedelim
+
+        // 2- screenshot'in kaydedilecegi dosyayi olusturalim
+
+        File webelementSS = new File(kaydedilecekDosyaYolu);
+
+        // 3- screenshot alip gecici dosyaya kaydedelim
+
+        File geciciDosya = istenenElement.getScreenshotAs(OutputType.FILE);
+
+        // 4- gecici dosyayi ana dosyaya kopyalayalim
+
+        try {
+            FileUtils.copyFile(geciciDosya,webelementSS);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+
+
+
+
 }
