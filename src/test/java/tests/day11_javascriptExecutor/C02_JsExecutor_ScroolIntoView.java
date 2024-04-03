@@ -26,11 +26,17 @@ public class C02_JsExecutor_ScroolIntoView extends TestBase_BeforeAfter {
         jse.executeScript("arguments[0].scrollIntoView(true);",newProductElementi);
 
 
-        ReusableMethods.bekle(1);
+        ReusableMethods.bekle(3);
         // new products bolumunden ilk urunu tiklayin
 
-        driver.findElement(By.xpath("(//li[@class='slick-slide slick-current slick-active'])[3]"))
-                .click();
+        WebElement ilkUrun = driver.findElement(By.xpath("(//li[@class='slick-slide slick-current slick-active'])[3]"));
+
+        // jse ile click yapalim
+        //jse = (JavascriptExecutor) driver;
+        //jse.executeScript("arguments[0].click();",ilkUrun);
+        ilkUrun.click();
+        ReusableMethods.bekle(3);
+
         // urun isminin Product Tax oldugunu test edin
 
         String expectedUrunIsmi = "Product Tax";
