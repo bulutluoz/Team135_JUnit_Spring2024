@@ -18,6 +18,7 @@ public class C02_JsExecutor_ScroolIntoView extends TestBase_BeforeAfter {
 
         // new products bolumu gorununceye kadar asagi inin
 
+
         ReusableMethods.bekle(1);
         WebElement newProductElementi = driver.findElement(By.xpath("//*[text()=' New Product ']"));
 
